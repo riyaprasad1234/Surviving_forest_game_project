@@ -16,13 +16,11 @@ namespace SpriteKind {
     export const Item = SpriteKind.create()
     export const Bonus = SpriteKind.create()
 }
-/**
- * - create level 2 and 3 tilemaps 
- * 
- * -create other hunter sprites that give food to main hunter 
- * 
- * -figure out attack animation
- */
+// - create level 2 and 3 tilemaps
+// 
+// -create other hunter sprites that give food to main hunter
+// 
+// -figure out attack animation
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Item, function (sprite, otherSprite) {
     info.changeScoreBy(1)
     otherSprite.destroy()
@@ -418,34 +416,34 @@ function createMap () {
     if (level == 1) {
         scene.setTileMap(img`
             . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . 5 . . . . . . . . . . . . . 5 . . . . 4 . . 
-            . . . . . . . . 5 e e . . . . . . . 5 . 5 . . e e e . . . e . . 
-            . . . . . . . . e . . . 5 . . . . e e e e . . . . . . . . . . . 
-            9 9 . . . . . e . . . . e . 5 . . . . . . . 5 . . 5 . . . . . . 
-            e e e . 5 . 5 . . . . e e e e . . . . . . . e e e e e e . . . a 
+            . . . . . . . . . . . . . . . . . . 5 . . . . . . . . . . . . . 
+            . . . . . . . . . . 5 . . . . . e e e e . . . . 5 . . . . . . . 
+            . . . . . . . . 5 e e . . . . . . . . . . . . e e e . . . e . . 
+            . . . . . . . . e . . . 5 . . . . . . . . . . . . . . . . . . . 
+            9 9 . . . . . e . . . . e . 5 . . . 4 . . . 5 . . 5 . 5 . . . . 
+            e e e . 5 . 5 . . . . e e e e . . . . . . . e e e e e e e . . a 
             e e e e e e e 2 2 2 e e e e e e e e 2 2 2 e e e e e e e e 2 2 e 
             `)
     } else if (level == 2) {
         scene.setTileMap(img`
-            . . . . . . . . . . . . . . . . . . . . . 4 . . . . . . . . . a 
-            9 . . 5 . . . . . . 5 . . . . . . . . . . e . . . 5 . . . . . e 
-            e e e e . . . e e e e e e . . . . 5 . . e . . e e e e e . . e . 
-            . . . . . . . . . . . . . . . e e e e . . . . . . . . . . e . . 
-            . . . . 5 . . . . . 5 . . . . . . . . . . . 5 . . . . . . . . . 
-            e e e e e . . . e e e e e . . . . . . e e e e e e . . . . . . . 
+            . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . a 
+            9 . 5 . . . . . . . 5 . . . . . 5 . . . 5 e . . . 5 . . . . . e 
+            e e e . . 5 . . e e e e e . . e e e . . e . . . e e e e . . e . 
+            . . . . . e e . . . . . . . . . . . . . . . . . . . . . . e . . 
+            . . 5 . . . . . . . . . . . . . . . . . . . 5 . . . . 4 . . . . 
+            e e e e . . . . . 5 . . . 5 . . . . . e e e e e e . . . . . . . 
             e e e e e 2 2 2 e e e e e e e 2 2 2 2 e e e e e e e e 2 . . . 5 
             e e e e e 2 2 2 e e e e e e e 2 2 2 2 2 2 2 e e e e e 2 2 2 e e 
             `)
     } else {
         scene.setTileMap(img`
-            . . . . . . . . . . . . . . . . . . 5 . . . . . . . . . . . . . 
-            . . . . . . . . . . 5 . . . . . . e e e . 4 . . . . . . . . . a 
-            . . . . . . . . e e e e . . . . . . . . . e . e e 5 . . . e e e 
-            . . . . . . 5 e . . . . . . 5 . . . . . e . . . e e e . . . . . 
-            9 . . 5 . . e . . . . . e e e e e . . e . . . . . . e e . . . 5 
-            e e e e e . . . . . . . . . . . . . . . . . . . . . . . . . e e 
-            . . . . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+            . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . 5 . . . . . . 5 . . 5 . . . . . . . . . . a 
+            . . . . . . . . e e e e . . . . . e e e e e . e e 5 . . . e e e 
+            . . . . . . 5 e . . . . . . 5 . 4 . . . . . . . e e e . . . . . 
+            9 . . 5 . . e . . 2 . . e e e e . . . . . . . . . . e e . . . 5 
+            e e e e e . . . 2 2 2 . . . . . . . . . . 2 2 2 2 2 . . . . e e 
+            . . . . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . . 
             2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
             `)
     }
@@ -482,14 +480,12 @@ scene.onHitTile(SpriteKind.Player, 10, function (sprite) {
         level = 2
         game.splash("Too " + " Low!")
         setup_level()
-        info.setScore(0)
-    } else if (level == 3 && info.score() >= 45) {
+    } else if (level == 3 && info.score() >= 42) {
         game.over(true)
-    } else if (info.score() < 45) {
+    } else if (info.score() < 42) {
         level = 3
         game.splash("Too " + " Low!")
         setup_level()
-        info.setScore(0)
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
@@ -501,7 +497,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Bonus, function (sprite, otherSprite) {
     info.changeScoreBy(3)
     otherSprite.destroy()
-    effects.confetti.startScreenEffect(200)
+    effects.confetti.startScreenEffect(400)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.setAction(hunter, ActionKind.walking_right)
@@ -513,7 +509,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
 })
 function specialItems () {
     tile_list_2 = scene.getTilesByType(4)
-    for (let value2 of tile_list_2) {
+    for (let value22 of tile_list_2) {
         specialItem = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -532,7 +528,7 @@ function specialItems () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.Bonus)
-        scene.place(value2, specialItem)
+        scene.place(value22, specialItem)
         animation.runMovementAnimation(
         specialItem,
         animation.animationPresets(animation.parachuteLeft),
@@ -846,7 +842,7 @@ function create_standing_animation () {
 }
 function create_items () {
     tile_list_2 = scene.getTilesByType(5)
-    for (let value of tile_list_2) {
+    for (let value3 of tile_list_2) {
         item = sprites.create(img`
             ....................
             ....................
@@ -869,7 +865,7 @@ function create_items () {
             ....................
             ....................
             `, SpriteKind.Item)
-        scene.place(value, item)
+        scene.place(value3, item)
         animation.runMovementAnimation(
         item,
         animation.animationPresets(animation.bobbing),
