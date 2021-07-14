@@ -843,6 +843,9 @@ function createHunter () {
     create_standing_animation()
     create_walking_animation()
 }
+function otherItems () {
+	
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     projectile2 = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
