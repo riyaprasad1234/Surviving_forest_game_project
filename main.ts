@@ -14,6 +14,7 @@ enum ActionKind {
 }
 namespace SpriteKind {
     export const Item = SpriteKind.create()
+    export const Bonus = SpriteKind.create()
 }
 /**
  * - create level 2 and 3 tilemaps 
@@ -396,22 +397,40 @@ function createMap () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, false)
+    scene.setTile(4, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, false)
     if (level == 1) {
         scene.setTileMap(img`
             . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . 5 . . . . . . . . . . . . . 5 . . . . . . . 
-            . . . . . . . . 5 e e . . . . . . . 5 . 5 . . e e e . . . . . . 
+            . . . . . . . . . . 5 . . . . . . . . . . . . . 5 . . . . 4 . . 
+            . . . . . . . . 5 e e . . . . . . . 5 . 5 . . e e e . . . e . . 
             . . . . . . . . e . . . 5 . . . . e e e e . . . . . . . . . . . 
-            9 9 . . . . . e . . . . e . 5 . . . . . . . 5 . 5 . 5 . . . . . 
-            e e e . 5 . 5 . . . . e e e e . 5 . . . . . e e e e e e . . . a 
+            9 9 . . . . . e . . . . e . 5 . . . . . . . 5 . . 5 . . . . . . 
+            e e e . 5 . 5 . . . . e e e e . . . . . . . e e e e e e . . . a 
             e e e e e e e 2 2 2 e e e e e e e e 2 2 2 e e e e e e e e 2 2 e 
             `)
     } else if (level == 2) {
         scene.setTileMap(img`
-            . . . . . . . . . . 5 . . . . . . . . . . 5 . . . . . . . . . a 
-            9 . . 5 . . . . e e e e . . . . . . . . . e . . . 5 . . . . . e 
-            e e e e . . . . . . . . . . . . . 5 . . e . . e e e e e . . e . 
+            . . . . . . . . . . . . . . . . . . . . . 4 . . . . . . . . . a 
+            9 . . 5 . . . . . . 5 . . . . . . . . . . e . . . 5 . . . . . e 
+            e e e e . . . e e e e e e . . . . 5 . . e . . e e e e e . . e . 
             . . . . . . . . . . . . . . . e e e e . . . . . . . . . . e . . 
             . . . . 5 . . . . . 5 . . . . . . . . . . . 5 . . . . . . . . . 
             e e e e e . . . e e e e e . . . . . . e e e e e e . . . . . . . 
@@ -421,7 +440,7 @@ function createMap () {
     } else {
         scene.setTileMap(img`
             . . . . . . . . . . . . . . . . . . 5 . . . . . . . . . . . . . 
-            . . . . . . . . . . 5 . . . . . . e e e . . . . . . . . . . . a 
+            . . . . . . . . . . 5 . . . . . . e e e . 4 . . . . . . . . . a 
             . . . . . . . . e e e e . . . . . . . . . e . e e 5 . . . e e e 
             . . . . . . 5 e . . . . . . 5 . . . . . e . . . e e e . . . . . 
             9 . . 5 . . e . . . . . e e e e e . . e . . . . . . e e . . . 5 
@@ -440,6 +459,9 @@ function clear_level () {
     for (let value of sprites.allOfKind(SpriteKind.Item)) {
         value.destroy()
     }
+    for (let value2 of sprites.allOfKind(SpriteKind.Bonus)) {
+        value2.destroy()
+    }
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.setAction(hunter, ActionKind.walking_left)
@@ -450,19 +472,22 @@ scene.onHitTile(SpriteKind.Player, 10, function (sprite) {
         setup_level()
     } else if (info.score() < 9) {
         level = 1
+        game.splash("Too " + " Low!")
         setup_level()
         info.setScore(0)
-    } else if (level == 2 && info.score() >= 20) {
+    } else if (level == 2 && info.score() >= 27) {
         level += 1
         setup_level()
-    } else if (info.score() < 20) {
+    } else if (info.score() < 27) {
         level = 2
+        game.splash("Too " + " Low!")
         setup_level()
         info.setScore(0)
-    } else if (level == 3 && info.score() >= 30) {
+    } else if (level == 3 && info.score() >= 45) {
         game.over(true)
-    } else if (info.score() < 30) {
+    } else if (info.score() < 45) {
         level = 3
+        game.splash("Too " + " Low!")
         setup_level()
         info.setScore(0)
     }
@@ -473,6 +498,11 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     animation.setAction(hunter, ActionKind.standing_left)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Bonus, function (sprite, otherSprite) {
+    info.changeScoreBy(3)
+    otherSprite.destroy()
+    effects.confetti.startScreenEffect(200)
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.setAction(hunter, ActionKind.walking_right)
 })
@@ -481,6 +511,36 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     music.powerDown.play()
     pause(200)
 })
+function specialItems () {
+    tile_list_2 = scene.getTilesByType(4)
+    for (let value2 of tile_list_2) {
+        specialItem = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . c . . . . . . . . 
+            . . . . c a a a c . . . . . . . 
+            . . . c c f a b b c . . . . . . 
+            . . . b f f b f a a . . . . . . 
+            . . . b b a b f f a . . . . . . 
+            . . . c b f b b a c . . . . . . 
+            . . . . b a f c c . . . . . . . 
+            . . . . . b b c . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Bonus)
+        scene.place(value2, specialItem)
+        animation.runMovementAnimation(
+        specialItem,
+        animation.animationPresets(animation.parachuteLeft),
+        2000,
+        true
+        )
+    }
+}
 function create_attack_animation () {
     anim_attacking_right = animation.createAnimation(ActionKind.attacking_right, 200)
     anim_attacking_right.addAnimationFrame(img`
@@ -703,6 +763,7 @@ function setup_level () {
     game.splash(" Level " + level)
     createMap()
     create_items()
+    specialItems()
     scene.placeOnRandomTile(hunter, 9)
 }
 function create_standing_animation () {
@@ -784,8 +845,8 @@ function create_standing_animation () {
     animation.attachAnimation(hunter, anim_standing_left)
 }
 function create_items () {
-    tile_list = scene.getTilesByType(5)
-    for (let value2 of tile_list) {
+    tile_list_2 = scene.getTilesByType(5)
+    for (let value of tile_list_2) {
         item = sprites.create(img`
             ....................
             ....................
@@ -808,7 +869,7 @@ function create_items () {
             ....................
             ....................
             `, SpriteKind.Item)
-        scene.place(value2, item)
+        scene.place(value, item)
         animation.runMovementAnimation(
         item,
         animation.animationPresets(animation.bobbing),
@@ -842,9 +903,6 @@ function createHunter () {
     scene.placeOnRandomTile(hunter, 9)
     create_standing_animation()
     create_walking_animation()
-}
-function otherItems () {
-	
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     projectile2 = sprites.createProjectileFromSprite(img`
@@ -884,11 +942,12 @@ scene.onHitTile(SpriteKind.Player, 2, function (sprite) {
 let projectile: Sprite = null
 let projectile2: Sprite = null
 let item: Sprite = null
-let tile_list: tiles.Tile[] = []
 let anim_standing_left: animation.Animation = null
 let anim_standing_right: animation.Animation = null
 let anim_attacking_left: animation.Animation = null
 let anim_attacking_right: animation.Animation = null
+let specialItem: Sprite = null
+let tile_list_2: tiles.Tile[] = []
 let hunter: Sprite = null
 let anim_walking_right: animation.Animation = null
 let anim_walking_left: animation.Animation = null
